@@ -122,3 +122,4 @@ class Command(BaseCommand):
     def generate_unique_id(self):
         max_id = Ticket.objects.all().aggregate(Max('id'))['id__max']
         return max_id + 1 if max_id else 1
+# Hello
