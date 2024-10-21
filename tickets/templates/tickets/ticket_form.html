@@ -1,0 +1,32 @@
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        {{ form.title }}
+    </div>
+    <div class="mb-3">
+        <label for="ticket_type" class="form-label">Ticket Type</label>
+        {{ form.ticket_type }}
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        {{ form.status }}
+    </div>
+    <div class="mb-3">
+        <label for="priority" class="form-label">Priority</label>
+        {{ form.priority }}
+    </div>
+    <div class="mb-3">
+        <label for="center" class="form-label">Center</label>
+        {{ form.center }}
+    </div>
+    <div class="mb-3">
+        <label for="assignee" class="form-label">Assignee</label>
+        {{ form.assignee }}
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        {{ form.description }}
+    </div>
+    <button type="submit" class="btn btn-primary">Create Ticket</button>
+</form>

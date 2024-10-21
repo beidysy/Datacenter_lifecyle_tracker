@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Technicians and Their Tickets</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Technicians and Their Assigned Tickets</h1>
+
+    {% for technician in technicians %}
+        <h2>{{ technician.first_name }} {{ technician.last_name }} ({{ technician.email }})</h2>
+        <p><strong>Total Tickets Assigned:</strong> {{ technician.ticket_set.count }}</p>
+
+        {% if technician.ticket_set.exists %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Center</th>
+                        <th>Assigned Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in technician.ticket_set.all %}
+                        <tr>
+                            <td>{{ ticket.title }}</td>
+                            <td>{{ ticket.status }}</td>
+                            <td>{{ ticket.priority }}</td>
+                            <td>{{ ticket.center.name }}</td>
+                            <td>{{ ticket.assigned_date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tickets assigned to this technician.</p>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

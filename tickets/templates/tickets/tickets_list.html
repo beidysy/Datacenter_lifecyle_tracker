@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Tickets List</h1>
+
+<!-- Search Bar -->
+<form method="GET" action="{% url 'tickets_list' %}" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search tickets..." value="{{ request.GET.search }}">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+<!-- Table of tickets -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Date Created</th>
+            <th>Assignee</th> <!-- Add Assignee column -->
+            <th>Actions</th> <!-- Action buttons for each ticket -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in page_obj %}
+        <tr>
+            <td>{{ ticket.title }}</td>
+            <td>{{ ticket.status }}</td>
+            <td>{{ ticket.priority }}</td>
+            <td>{{ ticket.date_created|date:"Y-m-d" }}</td>
+            <td>
+                {% if ticket.assignee %}
+                    {{ ticket.assignee.first_name }} {{ ticket.assignee.last_name }}
+                {% else %}
+                    Unassigned
+                {% endif %}
+            </td> <!-- Display the assignee or "Unassigned" if no one is assigned -->
+            <td>
+                <!-- Actions: Edit, Delete, View Details -->
+                <a href="{% url 'ticket_detail' ticket.id %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'ticket_edit' ticket.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'ticket_delete' ticket.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No tickets found.</td> <!-- Adjust colspan to 6 to match the new column -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination controls -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ request.GET.search }}">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}&search={{ request.GET.search }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ request.GET.search }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}

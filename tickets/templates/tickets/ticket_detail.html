@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Ticket Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Ticket Detail</h1>
+    <p><strong>Title:</strong> {{ ticket.title }}</p>
+    <p><strong>Status:</strong> {{ ticket.status }}</p>
+    <p><strong>Priority:</strong> {{ ticket.priority }}</p>
+    <p><strong>Date Created:</strong> {{ ticket.date_created|date:"Y-m-d" }}</p>
+    <p><strong>Assignee:</strong> {{ ticket.assignee.first_name }} {{ ticket.assignee.last_name }}{% if not ticket.assignee %}Unassigned{% endif %}</p>
+    
+    <!-- Buttons to Edit or Delete the ticket -->
+    <a href="{% url 'ticket_edit' ticket.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'ticket_delete' ticket.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

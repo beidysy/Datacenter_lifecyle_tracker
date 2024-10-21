@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Ticket{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Ticket</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- This will include the assignee field as well -->
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}
