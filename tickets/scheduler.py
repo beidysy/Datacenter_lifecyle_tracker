@@ -26,7 +26,7 @@ def start_scheduler():
     scheduler.add_job(
         run_check_eol,  # Now using a serializable function reference
         trigger='interval',
-        seconds=5,
+        seconds=10,
         id='check_eol_job',
         max_instances=1,
         replace_existing=True
