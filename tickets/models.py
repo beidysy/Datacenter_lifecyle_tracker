@@ -10,10 +10,16 @@ from django.dispatch import receiver
 class CustomUser(AbstractUser):
     role_choices = [('admin', 'Admin'), ('technician', 'Technician')]
     role = models.CharField(max_length=50, choices=role_choices)
+    
+    # Make email unique and required
+    email = models.EmailField(unique=True)
+
+    # Set email as the USERNAME_FIELD for authentication
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']  # Keep 'username' as a required field for admin purposes
 
     def __str__(self):
-        return self.username
-
+        return self.email  # Return email instead of username for display
 
 class TechnicianProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

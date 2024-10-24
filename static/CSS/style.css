@@ -1,3 +1,4 @@
+/* Styles for ticket list items */
 .list-group-item {
     border: 1px solid #ddd;
     margin-bottom: 10px;
@@ -7,6 +8,7 @@
     font-size: 1.2em;
 }
 
+/* Badge styles for priority levels */
 .badge.low {
     background-color: green;
 }
@@ -17,4 +19,106 @@
 
 .badge.high {
     background-color: red;
+}
+
+/* Logo styling */
+.logo {
+    width: 10%;        /* Smaller default width as a percentage for responsiveness */
+    max-width: 120px;  /* Limit the maximum size */
+    height: auto;      /* Maintain aspect ratio */
+    display: block;    /* Center the logo */
+    margin: 0 auto;    /* Center it horizontally */
+}
+
+/* Adjust the size of the logo for mobile devices */
+@media (max-width: 768px) {
+    .logo {
+        width: 20%;  /* Increase width for smaller screens */
+        max-width: 100px;  /* Further reduce max-width for mobile */
+    }
+}
+
+/* Button and form styling (if needed) */
+.btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 10px 2px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Form input styling */
+.input-box input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Forgot password or contact admin link styling */
+.forgot-password a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Ticket status badge styling */
+.badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: white;
+}
+
+/* Ensure buttons are nicely spaced */
+.btn {
+    margin-top: 15px;
+}
+
+/* Misc container and page layout styling */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table styling for ticket lists */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+    text-align: left;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
 }

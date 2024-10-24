@@ -6,7 +6,19 @@
     <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.non_field_errors }}  <!-- Display non-field specific errors -->
+        
+        <!-- Custom field rendering for email and password -->
+        <div class="input-box">
+            <label for="id_username">Email</label>
+            {{ form.username }}  <!-- This is the field rendered by Django, we are only updating the label and placeholder -->
+        </div>
+        
+        <div class="input-box">
+            <label for="id_password">Password</label>
+            {{ form.password }}  <!-- This renders the password input field -->
+        </div>
+        
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>

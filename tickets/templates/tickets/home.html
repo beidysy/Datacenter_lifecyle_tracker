@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Home - Data Center Portal
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="login-box">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Data Center Logo">
+            <h2>DATA CENTER</h2>
+            <p>Health Tracking & Ticketing Portal</p>
+        </div>
+        
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    Please correct the errors below.
+                </div>
+            {% endif %}
+            <div class="input-box">
+                <label for="email">Email Address *</label>
+                <input type="email" name="username" id="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="input-box">
+                <label for="password">Password *</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <div class="forgot-password">
+                <span> | </span>
+                <a href="{% url 'contact_admin' %}">Contact the admin for assistance</a>.
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
