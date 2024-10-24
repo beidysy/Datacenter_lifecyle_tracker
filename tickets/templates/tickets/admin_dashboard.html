@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <div class="admin-overview">
+        <h3>All Tickets</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Ticket Type</th>
+                    <th>Status</th>
+                    <th>Assignee</th>
+                    <th>Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.ticket_type }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.assignee }}</td>
+                    <td>{{ ticket.date_created }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No tickets found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

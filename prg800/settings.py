@@ -152,7 +152,8 @@ STATICFILES_DIRS = [
 # Redirects after successful login/logout
 # settings.py
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'tickets_list'  # After login, users are redirected here
+# LOGIN_REDIRECT_URL = 'tickets_list'  # After login, users are redirected here
+LOGIN_REDIRECT_URL = 'redirect_dashboard'
 LOGOUT_REDIRECT_URL = '/'  # After logout, redirect to login page
 
 # Default authentication backends

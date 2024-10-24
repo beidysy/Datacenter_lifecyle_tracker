@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import Count
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import uuid  # Import for generating unique IDs
 
 
 # Custom user model extending AbstractUser
@@ -20,6 +21,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email  # Return email instead of username for display
+
 
 class TechnicianProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -75,8 +77,6 @@ class Ticket(models.Model):
         else:
             print("Technician could not be assigned.")
 
-
-
     def save(self, *args, **kwargs):
         # Save the ticket to generate a primary key if it hasn't been saved before
         if not self.pk:
@@ -123,6 +123,7 @@ class NewInventory(models.Model):
     product_status = models.CharField(max_length=100, choices=STATUS_CHOICES)
     purchased_date = models.DateField(null=True, blank=True)
     center = models.ForeignKey('DataCenter', on_delete=models.CASCADE)
+    product_id = models.CharField(max_length=100, default=uuid.uuid4, unique=True)  # Automatically generate a unique Product ID
 
     def __str__(self):
         return self.product_name
