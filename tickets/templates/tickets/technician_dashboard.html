@@ -62,8 +62,8 @@ Technician Dashboard
                     <td>{{ ticket.ticket_type }}</td>
                     <td>{{ ticket.assigned_date|date:"d/m/Y" }}</td>
                     <td>{{ ticket.status }}</td>
-                    <td>{{ ticket.product_name }}</td>
-                    <td>{{ ticket.product_id }}</td>
+                    <td>{{ ticket.product.product_name }}</td> <!-- Corrected field -->
+                    <td>{{ ticket.product.product_id }}</td>   <!-- Corrected field -->
                     <td>
                         <div class="dropdown">
                             <button class="btn btn-success dropdown-toggle" type="button" id="actionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,6 +82,7 @@ Technician Dashboard
                 </tr>
                 {% endfor %}
             </tbody>
+            
         </table>
     </div>
 </div>

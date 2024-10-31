@@ -47,11 +47,21 @@ class CustomUserAdmin(BaseUserAdmin):
         qs = super().get_queryset(request)
         return qs.annotate(ticket_count=Count('ticket'))
 
-# Customize TicketAdmin to show technician details
+# Customize TicketAdmin to show technician details and product details
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'priority', 'center', 'assignee', 'assigned_date')
+    list_display = ('title', 'status', 'priority', 'center', 'assignee', 'assigned_date', 'product_name', 'product_id')
     search_fields = ('title', 'center__name', 'assignee__username')
     list_filter = ('status', 'priority', 'center')
+
+    def product_name(self, obj):
+        # Display the product name from the related NewInventory model
+        return obj.product.product_name if obj.product else '-'
+    product_name.short_description = 'Product Name'
+
+    def product_id(self, obj):
+        # Display the product ID from the related NewInventory model
+        return obj.product.product_id if obj.product else '-'
+    product_id.short_description = 'Product ID'
 
 # Register the customized TicketAdmin
 admin.site.register(Ticket, TicketAdmin)

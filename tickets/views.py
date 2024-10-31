@@ -39,7 +39,7 @@ def admin_dashboard(request):
 # Technician dashboard showing only tickets assigned to the technician
 @login_required
 def technician_dashboard(request):
-    tickets = Ticket.objects.filter(assignee=request.user)
+    tickets = Ticket.objects.filter(assignee=request.user).select_related('product')
     paginator = Paginator(tickets, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -48,6 +48,7 @@ def technician_dashboard(request):
         'tickets': page_obj,
     }
     return render(request, 'tickets/technician_dashboard.html', context)
+
 
 # Contact admin view
 def contact_admin(request):
@@ -93,21 +94,43 @@ def ticket_edit(request, id):
     return render(request, 'tickets/ticket_edit.html', {'form': form, 'ticket': ticket})
 
 # Create a new ticket
+# @login_required
+# def ticket_create(request):
+#     if request.method == 'POST':
+#         form = TicketForm(request.POST)
+#         if form.is_valid():
+#             ticket = form.save(commit=False)
+#             if not ticket.assignee:
+#                 assign_to_least_busy_technician(ticket)
+#             if ticket.assignee and not ticket.assigned_date:
+#                 ticket.assigned_date = timezone.now()
+#             ticket.save()
+#             return redirect('tickets_list')
+#     else:
+#         form = TicketForm()
+#     return render(request, 'tickets/ticket_form.html', {'form': form})
 @login_required
 def ticket_create(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
+            
+            # Check if product is assigned, otherwise assign automatically
+            if not ticket.product:
+                default_product = NewInventory.objects.filter(product_status='active').first()
+                ticket.product = default_product
+            
+            # Automatically assign technician if not assigned
             if not ticket.assignee:
-                assign_to_least_busy_technician(ticket)
-            if ticket.assignee and not ticket.assigned_date:
-                ticket.assigned_date = timezone.now()
+                ticket.assign_to_technician()
+            
             ticket.save()
             return redirect('tickets_list')
     else:
         form = TicketForm()
     return render(request, 'tickets/ticket_form.html', {'form': form})
+
 
 # Delete a ticket
 @login_required
