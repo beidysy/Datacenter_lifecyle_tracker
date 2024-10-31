@@ -80,7 +80,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE(f'Today is {today}'))
 
         # Threshold for 5 days before EOL
-        threshold = today + timedelta(days=5)
+        threshold = today + timedelta(days=30)
         self.stdout.write(self.style.NOTICE(f'Checking for items with EOL before {threshold}'))
 
         # Get items where the EOL date is within the next 5 days
